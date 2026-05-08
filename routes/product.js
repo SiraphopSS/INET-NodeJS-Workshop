@@ -7,6 +7,10 @@ router.post('/', async function(req, res, next) {
     try {
         let { name, price, description, quantity } = req.body
 
+        if (!name || !price || !description || !quantity) {
+            return res.status(400).send({ status: "400", message: "All fields are required." })
+        }
+
         let product = new productSchema({
             name: name,
             price: price,
@@ -48,6 +52,10 @@ router.put('/:id', async function(req, res, next) {
     try {
         let { id } = req.params
         let { name, price, description, quantity } = req.body
+
+        if (!name || !price || !description || !quantity) {
+            return res.status(400).send({ status: "400", message: "All fields are required." })
+        }
 
         let product = await productSchema.findByIdAndUpdate(id, {
             name: name,
