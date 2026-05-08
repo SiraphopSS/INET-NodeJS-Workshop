@@ -31,7 +31,7 @@ router.get('/', async function(req, res, next) {
     let products = await productSchema.find({})
     res.status(200).send({status: "200", message: "Success.", products })
   } catch (error) {
-    res.status(500).send({ message: error.message })
+    res.status(500).send({status: "500", message: error.message })
   }
 });
 
@@ -64,7 +64,7 @@ router.put('/:id', async function(req, res, next) {
             quantity: quantity
         }, { new: true })
         if (!product) {
-            res.status(400).send(null, { message: 'Product not found!' })
+            res.status(400).send({ status: "400", message: 'Product not found!' })
         }
 
         res.status(200).send({status: "200", message: "Product Updated Success." , product})
