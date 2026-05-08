@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt')
+var jwt = require('jsonwebtoken')
 var userSchema = require('../models/user.model')
 
 
@@ -18,7 +19,8 @@ router.post('/', async function(req, res, next) {
     if (!passwordCheck) {
         return res.status(401).send({ status: "401", message: "No Authorize. Wrong Password!" })
     }
-    res.status(200).send({ status: "200", message: "Login Success. Welcome User!", user })
+    let token = await jwt.sign({ id: user._id }, String(process.env.JWT_SECRET), { expiresIn: '2h' })
+    res.status(200).send({ status: "200", message: "Login Success. Welcome User!", user, token })
   } catch (error) {
     res.status(500).send({ status: "500", message: error.message })
   }

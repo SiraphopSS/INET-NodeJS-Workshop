@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var orderSchema = require('../models/order.model')
+const verifyToken = require('../middleware/token.middleware.js')
 
-router.get('/', async function(req, res, next) {
+router.get('/', verifyToken, async function(req, res, next) {
   try {
     let orders = await orderSchema.find()
 

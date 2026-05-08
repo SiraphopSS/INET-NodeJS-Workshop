@@ -11,7 +11,7 @@ router.put('/:id/approve', authMiddleware, async function(req, res, next) {
 
     let user = await userSchema.findByIdAndUpdate(id, {
       auth: auth
-    }, { new: true })
+    }, { returnDocument: 'after' })
 
     res.status(200).send({ status: "200", message: "User Approved Success.", user })
   } catch (error) {

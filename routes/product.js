@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var productSchema = require('../models/product.model')
 var orderSchema = require('../models/order.model')
+const verifyToken = require('../middleware/token.middleware.js')
 
-router.post('/', async function(req, res, next) {
+router.post('/', verifyToken, async function(req, res, next) {
     try {
         let { name, price, description, quantity } = req.body
 
@@ -26,7 +27,7 @@ router.post('/', async function(req, res, next) {
     }
 })
 
-router.get('/', async function(req, res, next) {
+router.get('/', verifyToken, async function(req, res, next) {
   try {
     let products = await productSchema.find({})
     res.status(200).send({status: "200", message: "Success.", products })
@@ -35,7 +36,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-router.get('/:id', async function(req, res, next) {
+router.get('/:id', verifyToken, async function(req, res, next) {
     try {
         let { id } = req.params
 
@@ -48,7 +49,7 @@ router.get('/:id', async function(req, res, next) {
     }
 })
 
-router.put('/:id', async function(req, res, next) {
+router.put('/:id', verifyToken, async function(req, res, next) {
     try {
         let { id } = req.params
         let { name, price, description, quantity } = req.body
@@ -73,7 +74,7 @@ router.put('/:id', async function(req, res, next) {
     }
 })
 
-router.delete('/:id', async function(req, res, next) {
+router.delete('/:id', verifyToken, async function(req, res, next) {
     try {
         let { id } = req.params
 
@@ -87,7 +88,7 @@ router.delete('/:id', async function(req, res, next) {
 
 // Order Product
 
-router.post('/:id/orders', async function(req, res, next) {
+router.post('/:id/orders', verifyToken, async function(req, res, next) {
     try {
         let { id } = req.params
         let { quantity } = req.body

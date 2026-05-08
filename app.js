@@ -6,7 +6,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
-const verifyToken = require('./middleware/auth.middleware')
+const verifyAuth = require('./middleware/auth.middleware')
+const verifyToken = require('./middleware/token.middleware.js')
 require('./db.js')
 
 var indexRouter = require('./routes/index');
@@ -33,9 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/v1/register', registerRouter)
 app.use('/api/v1/login', loginRouter)
-app.use('/api/v1/users', verifyToken, usersRouter);
-app.use('/api/v1/products', productRouter)
-app.use('/api/v1/orders', orderRouter)
+app.use('/api/v1/users', verifyAuth, usersRouter);
+app.use('/api/v1/products', verifyToken, productRouter)
+app.use('/api/v1/orders', verifyToken, orderRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
