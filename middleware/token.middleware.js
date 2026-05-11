@@ -15,6 +15,6 @@ module.exports = async function (req, res, next) {
         req.user = user
         next()
     } catch (error) {
-        res.status(500).send({ status: "500", message: error.message })
+        res.status(401).send({ status: "401", message: "Invalid Token. Please Login First!" })
     }
 }

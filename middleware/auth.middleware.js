@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
         let token = req.headers.authorization
         if (!token) {
             // console.log("No Token Case")
-            return res.status(401).send({ status: "401", message: "No Authorize. This action need Admin Level to proceed" })
+            return res.status(401).send({ status: "401", message: "No Token Found. Please Login Again!" })
         }
         let decoded = jwt.verify(token, String(process.env.ADMIN_JWT_SECRET))
         let admin = await userSchema.findById(decoded.id)
@@ -19,6 +19,6 @@ module.exports = async (req, res, next) => {
         next()
     } catch (error) {
         // console.log("error case", error.message)
-        res.status(401).send({ status: "401", message: "No Authorize, This action need Admin Level to proceed" })
+        res.status(401).send({ status: "401", message: "Invalid Token. Please Login Again!" })
     }
 }
