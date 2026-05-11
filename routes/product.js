@@ -8,7 +8,7 @@ router.post('/', verifyToken, async function(req, res, next) {
     try {
         let { name, price, description, quantity } = req.body
 
-        if (!name || !price || !description || !quantity) {
+        if (!name || !price || !quantity) {
             return res.status(400).send({ status: "400", message: "All fields are required." })
         }
 
@@ -54,7 +54,7 @@ router.put('/:id', verifyToken, async function(req, res, next) {
         let { id } = req.params
         let { name, price, description, quantity } = req.body
 
-        if (!name || !price || !description || !quantity) {
+        if (!name || !price || !quantity) {
             return res.status(400).send({ status: "400", message: "All fields are required." })
         }
 

@@ -6,7 +6,7 @@ var userSchema = require('../models/user.model')
 
 router.post('/', async function(req, res, next) {
   try {
-    let { username, password } = req.body
+    let { username, password, role } = req.body
   
     let existingUser = await userSchema.findOne({ username: username })
     if (existingUser) {
@@ -16,7 +16,8 @@ router.post('/', async function(req, res, next) {
     let user = new userSchema({
         username: username,
         password: hashPassword,
-        auth: false
+        auth: false,
+        role: role
     })
 
     await user.save()
